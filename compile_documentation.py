@@ -13,23 +13,16 @@
 # for CERN Subversion repositories and CERN Git repositories. It does this     #
 # using Pandoc and online CSS.                                                 #
 #                                                                              #
-# copyright (C) 2015 William Breaden Madden                                    #
+# Will Breaden Madden, w.bm@cern.ch                                            #
 #                                                                              #
-# This software is released under the terms of the GNU General Public License  #
-# version 3 (GPLv3).                                                           #
+# Subject to ATLAS Data Access Policy, this software is released under the     #
+# terms of the GNU General Public License version 3 (GPLv3).                   #
 #                                                                              #
-# This program is free software: you can redistribute it and/or modify it      #
-# under the terms of the GNU General Public License as published by the Free   #
-# Software Foundation, either version 3 of the License, or (at your option)    #
-# any later version.                                                           #
-#                                                                              #
-# This program is distributed in the hope that it will be useful, but WITHOUT  #
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or        #
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for     #
-# more details.                                                                #
+# For a copy of the ATLAS Data Access Policy, see                              #
+# DOI: 10.7483/OPENDATA.ATLAS.T9YR.Y7MZ or http://opendata.cern.ch/record/413. #
 #                                                                              #
 # For a copy of the GNU General Public License, see                            #
-# <http://www.gnu.org/licenses/>.                                              #
+# http://www.gnu.org/licenses/.                                                #
 #                                                                              #
 ################################################################################
 
@@ -42,10 +35,12 @@ Options:
     --MarkdownFileName=FILE    Markdown file [default: README.md]
     --HTMLSVNFileName=FILE     SVN HTML file [default: README_SVN.html]
     --HTMLGitFileName=FILE     Git HTML file [default: README.html]
+    --compileHTMLSVN=BOOL      compile HTML for SVN [default: True]
+    --compileHTMLGit=BOOL      compile HTML for Git [default: True]
 """
 
 name    = "compile_documentation"
-version = "2015-02-13T2009Z"
+version = "2015-02-20T2333Z"
 
 import os
 import sys
@@ -58,6 +53,16 @@ def main(options):
     MarkdownFileName = options["--MarkdownFileName"]
     HTMLSVNFileName  = options["--HTMLSVNFileName"]
     HTMLGitFileName  = options["--HTMLGitFileName"]
+    compileHTMLGit   = options["--compileHTMLGit"]
+    compileHTMLSVN   = options["--compileHTMLSVN"]
+    if compileHTMLGit in ["True", "true"]:
+        compileHTMLGit = True
+    else:
+        compileHTMLGit = False
+    if compileHTMLSVN in ["True", "true"]:
+        compileHTMLSVN = True
+    else:
+        compileHTMLSVN = False
 
     ensure_program_available("pandoc")
     ensure_version_Pandoc()
